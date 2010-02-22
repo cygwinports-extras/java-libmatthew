@@ -1,0 +1,51 @@
+--- origsrc/libmatthew-java-0.7.2/Makefile	2009-04-05 04:46:42.000000000 -0500
++++ src/libmatthew-java-0.7.2/Makefile	2009-11-29 16:25:18.775039700 -0600
+@@ -44,7 +44,7 @@ DEBUG?=disable
+ .NO_PARALLEL:
+ .NOTPARALLEL:
+ 
+-all: unix-$(UNIXVER).jar cgi-$(CGIVER).jar debug-enable-$(DEBUGVER).jar debug-disable-$(DEBUGVER).jar io-$(IOVER).jar hexdump-$(HEXVER).jar libcgi-java.so libunix-java.so
++all: unix-$(UNIXVER).jar cgi-$(CGIVER).jar debug-enable-$(DEBUGVER).jar debug-disable-$(DEBUGVER).jar io-$(IOVER).jar hexdump-$(HEXVER).jar cygcgi-java.dll cygunix-java.dll
+ 
+ classes: .classes 
+ .classes: $(SRC) 
+@@ -54,7 +54,7 @@ classes: .classes 
+ 	touch .classes
+ clean:
+ 	rm -rf classes doc
+-	rm -f .classes .enabledebug .disabledebug *.o *.h *.so *.tar.gz *.jar *.cgi Manifest
++	rm -f .classes .enabledebug .disabledebug *.o *.h *.dll *.tar.gz *.jar *.cgi Manifest
+ 	rm -rf libmatthew-java-$(MATTVER)
+ 
+ cgi-$(CGIVER).jar: .classes
+@@ -74,14 +74,14 @@ hexdump-$(HEXVER).jar: .classes
+ 
+ %.o: %.c %.h
+ 	$(CC) $(CFLAGS) $(CSTD) $(CSHAREFLAG) $(INCLUDES) -c -o $@ $<
+-lib%.so: %.o
++cyg%.dll: %.o
+ 	$(CC) $(LDFLAGS) $(LDSHAREFLAGS) -o $@ $<
+ unix-java.h: .classes
+ 	$(JAVAH) -classpath classes -o $@ cx.ath.matthew.unix.UnixServerSocket cx.ath.matthew.unix.UnixSocket cx.ath.matthew.unix.USInputStream cx.ath.matthew.unix.USOutputStream
+ cgi-java.h: .classes
+ 	$(JAVAH) -classpath classes -o $@ cx.ath.matthew.cgi.CGI
+ 
+-test.cgi: cgi-$(CGIVER).jar libcgi-java.so
++test.cgi: cgi-$(CGIVER).jar cygcgi-java.dll
+ 	$(GCJ) $(GCJFLAGS) $(GCJJNIFLAG) -L. -lcgi-java -o test.cgi --main=cx.ath.matthew.cgi.testcgi cgi-$(CGIVER).jar
+ 	
+ libmatthew-java-$(MATTVER).tar.gz: Makefile cx cgi-java.c unix-java.c README INSTALL COPYING changelog
+@@ -119,10 +119,10 @@ install-doc: doc/index.html
+ 	install -d $(DESTDIR)$(DOCDIR)
+ 	cp -a doc $(DESTDIR)$(DOCDIR)/api
+ 
+-install-native: libcgi-java.so libunix-java.so 
++install-native: cygcgi-java.dll cygunix-java.dll 
+ 	install -d $(DESTDIR)$(LIBDIR) 
+-	install libcgi-java.so $(DESTDIR)$(LIBDIR)
+-	install libunix-java.so $(DESTDIR)$(LIBDIR)
++	install cygcgi-java.dll $(DESTDIR)$(LIBDIR)
++	install cygunix-java.dll $(DESTDIR)$(LIBDIR)
+ 
+ install-jar: unix-$(UNIXVER).jar cgi-$(CGIVER).jar debug-enable-$(DEBUGVER).jar debug-disable-$(DEBUGVER).jar io-$(IOVER).jar hexdump-$(HEXVER).jar
+ 	install -d $(DESTDIR)$(JARDIR)
