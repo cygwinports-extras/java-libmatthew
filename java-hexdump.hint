@@ -1,0 +1,4 @@
+category: Java
+external-source: java-libmatthew
+sdesc: "Java library for byte-array formatting"
+ldesc: "This Java class formats byte-arrays in hex and ascii for display."

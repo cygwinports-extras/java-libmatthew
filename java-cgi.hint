@@ -1,0 +1,6 @@
+category: Java
+requires: libgcc1
+external-source: java-libmatthew
+sdesc: "Java library for CGI applications"
+ldesc: "This is a collection of classes and native code to allow you to 
+write CGI applications in Java."
