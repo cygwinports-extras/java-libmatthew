@@ -1,6 +1,0 @@
-category: Java
-requires: libgcc1 java-hexdump
-external-source: java-libmatthew
-sdesc: "Unix sockets library for Java"
-ldesc: "This is a collection of classes and native code to allow you to 
-read and write Unix sockets in Java."

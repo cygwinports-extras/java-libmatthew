@@ -1,5 +1,0 @@
-category: Java
-requires: java-hexdump
-external-source: java-libmatthew
-sdesc: "Java logging/debugging library"
-ldesc: "This is a comprehensive logging and debugging solution for Java."

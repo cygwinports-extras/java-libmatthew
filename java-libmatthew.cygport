@@ -1,0 +1,35 @@
+inherit java
+
+NAME="java-libmatthew"
+VERSION=0.8
+RELEASE=1
+CATEGORY="Java"
+SUMMARY="Assortment of useful Java libraries"
+DESCRIPTION="These are a selection of libraries for Java which are useful and
+not provided with normal Java."
+HOMEPAGE="http://www.matthew.ath.cx/projects/java/"
+SRC_URI="http://www.matthew.ath.cx/projects/java/libmatthew-java-${VERSION}.tar.gz"
+SRC_DIR="libmatthew-java-${VERSION}"
+PATCH_URI="0.7.2-jni-dll.patch"
+
+PKG_NAMES="${NAME} javadoc-libmatthew"
+java_libmatthew_CONTENTS="usr/bin/ usr/share/doc/ ${JAVA_DIR#/}"
+javadoc_libmatthew_SUMMARY="${SUMMARY} (Javadocs)"
+javadoc_libmatthew_CONTENTS=${JAVADOC_DIR#/}
+
+DIFF_EXCLUDES="Debug.java"
+
+src_compile() {
+	lndirs
+	cd ${B}
+	cygmake -j1 all doc \
+		PREFIX=/usr LIBDIR=/usr/bin \
+		CC=${CC} CFLAGS="${CFLAGS}" GCJ=${GCJ} \
+		JAVAC=${JAVAC} JAVAH=${JAVAH} JAVADOC=${JAVADOC}
+}
+
+src_install() {
+	cd ${B}
+	cyginstall PREFIX=/usr LIBDIR=/usr/bin
+	dojavadoc doc
+}

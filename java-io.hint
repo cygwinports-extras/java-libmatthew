@@ -1,9 +1,0 @@
-category: Java
-external-source: java-libmatthew
-sdesc: "Enhanced I/O library for Java"
-ldesc: "This provides a few much needed extensions to the Java I/O 
-subsystem. Firstly, there is a class which will connect and InputStream 
-with an OutputStream and copy data between them.  Secondly there are two 
-classes for inserting into an Input or OutputStream pipe a command line 
-command. Thirdly there are a pair of classes for splitting streams in 
-two."
